@@ -1,0 +1,119 @@
+source: pada class Game, method Game(), line 18-26
+smell: Comment
+problem: pada method Game terdapat comment untuk menjelaskan suatu perintah yaitu "fill board with not_open object".
+Seharusnya nama method atau atribut haruslah sudah bisa menjelaskan fungsinya dengan baik tanpa harus diberi comment.
+solution: Maka bisa dihilangkan dengan melakukan extract method pada code tersebut menjadi 1 method bernama fillBoardWithNotOpen
+
+source: pada class Game, method Game, line 28-41
+smell: Comment
+problem: pada method Game terdapat comment untuk menjelaskan suatu perintah yaitu "place mines to board".
+Seharusnya nama method atau atribut haruslah sudah bisa menjelaskan fungsinya dengan baik tanpa harus diberi comment.
+solution: Maka bisa dihilangkan dengan melakukan extract method pada code tersebut menjadi 1 method bernama PlaceMinesToBoard.
+
+source: pada class Main, method startGame line 47
+smell: deadcode 
+problem: di line 47 terdapat "if(level < 1 || level > 2) continue;" if ini tidak berguna. tanpa adanya if ini maka
+jika input level < 1 atau > 2 maka tidak akan masuk ke dalam if(level == 1) atau if(level == 2) sehingga tidak akan break 
+dan akan mengulang lagi karena while masih true. Dengan kata lain jika inputnya <1 atau > 2 akan otomatis input ulang.
+Oleh karena itu apabila dihilangkan tidak akan berpengaruh apa apa.
+solution: Maka code di line 47 ini dapat dihilangkan.
+
+source: pada class GameData
+smell: Speculative Genarality
+problem: class ini menjadi tidak terpakai karena hanya terdapat satu data game saja tidak ada data yang lain, serta
+tidak menambahkan fungsionalitas. Mungkin ini hanya bentuk spekulasi dari programmar yang sebelumnya membuat program ini.
+solution: Maka kita bisa melakukan collapse hierarchy dengan menghapus class GameData dan class WinLoseData tidak lagi extends
+ke class GameData.
+
+source: pada class Easy dan pada class Hard
+smell: lazy class
+problem: pada class easy dan class hard tidak terdapat atribut apapun serta tidak ada tanggung jawab apapun. Hal ini bisa 
+menyulitkan programmer karena terlalu banyak class padahal tidak terlalu berfungsi.
+solution: maka kita bisa melakukan inline class yaitu class easy dan class hard dihapus kemudian digantikan menggunakan 
+variabel easywin, easylose, hardwin, dan hardlose pada class player. Ketiga class ini tidak bisa dijadikan 1 class karena akan 
+menimbulkan smell dataclass karena hanya berisi setter getter saja. Setelah dihapus kemudian lakukan penyesuaian pada class player.
+Variabel ini juga akan digaunakan untuk mengatasi smell pada WinLoseData.
+
+source: pada class WinLoseData
+smell: data class
+problem: pada class WinLoseData hanya terdapat atribut serta setter getternya saja, atau bisa dikatakan class ini hanya menampung
+data saja. Hal ini bisa menyulitkan programmer karena terlalu banyak class padahal tidak terlalu berfungsi.
+solution: maka kita bisa melakukan inline class yaitu class WinLoseData dihapus kemudian digantikan menggunakan variabel easywin, easylose,
+hardwin, dan hardlose pada class player. Ketiga class ini tidak bisa dijadikan 1 class karena akan menimbulkan smell dataclass
+karena hanya berisi setter getter saja. Setelah dihapus kemudian lakukan penyesuaian pada class player.
+
+source: pada class Setting, line 9
+smell: deadcode
+problem: pada class setting code line 9 terdapat fungsi super, super biasa digunakan untuk mengakses baik varabel atau method
+dari parent. Karena class setting hanya berdiri sendiri dan tidak memiliki parent. maka code ini menjadi tidak berguna
+solution: bisa diatasi dengan menghapus fungsi tersebut. 
+
+source: pada class PlayerRepo, method loadOrNewPrompt,line  51-67					
+smell: Long Method
+problem: pada class PlayerRepo, method loadOrNewPrompt termasuk dalam smell long method karena memiliki code terlalu panjang
+sehingga memungkinkan programmer mengalami kesulitan dalam mengerti method tersebut.
+solution: Maka bisa kita lakukan extract method pada code line  51-67 menjadi method printHeaderProfile.
+
+source: pada class Main, method startgame,line 38-59									
+smell: Long Method
+problem: pada class main, method start termasuk dalam smell long method karena memiliki code terlalu panjang
+sehingga memungkinkan programmer mengalami kesulitan dalam mengerti method tersebut.
+solution: Maka bisa kita lakukan extract method pada code line  38-59 menjadi method choosingLevel.
+
+source: pada class Player, method fromtext, line 86-10
+smell: Long Method
+problem: pada class Player, method fromtext termasuk dalam smell long method karena memiliki code terlalu panjang 
+sehingga memungkinkan programmer mengalami kesulitan dalam mengerti method tersebut.
+solution: Maka bisa kita lakukan extract method pada code line 86-103 menjadi method splitAndValidateText.
+
+source: pada class Player, method howtoplay dan symbolsLegend
+smell: Divergent Change, Large class
+problem: pada class ini terlihat memiliki beberapa tanggung jawab yaitu memanage player dan mencetak panduan howtoplay,
+hal ini melanggar prinsip Single Responsibility Principle karena memiliki tanggung jawab yang beragam, selain itu memiliki
+line of code yang terlalu banyak.
+solution: Maka kita bisa melakuken extract class dimana kita membuat class baru bernama GamePrinter namun dipindahkan ke package Game
+
+source: pada class Main, method startGame,line 23
+smell: Divergent Change
+problem: class ini memiliki beberapa tanggung jawab yang berbeda,contohny menjalankan game serta mencetak enter untuk 
+membersihkan layar, hal ini menyalahi prinsip Single Responsibility Principle.
+solution: Dikarenakan class tujuannya sudah ada yaitu class GamePrinter maka tidak perlu melakukan extract class,kita
+bisa lakukan move method ke class tersebut dan melakukan extract method menjadi method bernama clear.
+
+source: pada class PrinterGame, methodd howToPlay
+smell: duplicate code
+problem: setelah terdapat method clear pada dokumentasi smell sebelumnya maka terjadi duplicate code pada line 14
+solution: hapus code di line 14 dan panggil method clear yang sudah ada.
+
+source: pada class Main, method startGame, line 24-35
+smell: Divergent Change
+problem: class ini memiliki beberapa tanggung jawab yang berbeda,contohny menjalankan game serta mencetak header game, hal ini 
+menyalahi prinsip Single Responsibility Principle.
+solution: Dikarenakan class tujuannya sudah ada yaitu class GamePrinter maka tidak perlu melakukan extract class,kita
+bisa lakukan move method ke class tersebut.
+
+source: pada class game, method clear
+smell: Divergent Change, Large class
+problem: Class ini memiliki method terlalu banyak dan memiliki line of code terlalu panjang, selain itu terdapat juga beberapa
+tanggung jawab dari class ini yang melanggar SRP, sehingga mengalami smell divergent change juga. Contohnya class ini bertanggung
+jawab untuk menjalankan game serta menampilkannya di console.
+solution: Dikarenakan class tujuannya sudah ada yaitu class GamePrinter maka tidak perlu melakukan extract class, serta apabila
+kita lihat dalam class tersebut maka sudah terdapat function untuk melakukan clear screen oleh karena itu kita bisa hapus function
+ini dan panggil class GamePrinter dan panggil method clear.
+
+source: pada class game, method print,line 165-181
+smell: Divergent Change, Large class
+problem: Class ini memiliki method terlalu banyak dan memiliki line of code terlalu panjang, selain itu terdapat juga beberapa
+tanggung jawab dari class ini yang melanggar SRP, sehingga mengalami smell divergent change juga. Contohnya class ini bertanggung
+jawab untuk menjalankan game serta menampilkannya di console.
+solution: Dikarenakan class tujuannya sudah ada yaitu class GamePrinter maka tidak perlu melakukan extract class, kita 
+bisa lakukan move method ke class tersebut dan melakukan beberapa penyesuaian di beberapa class.
+
+source: pada class GameObject,line 4
+smell: primitive obsession
+problem: pada class ini teradapt tipe data String digunakan untuk menampung type, namun behaviour type melebihi tipe data String. Hal
+ini menyebabkan terjadinya smell primitive obsession
+solution: Untuk mengatasi problem kita bisa membuat class enum kemudian isi atribut dengan type yang ada, dan ganti tipe data dari 
+type menggunakan enum. Setelah itu lakukan beberapa penyesuaian dalam class Game, dan GameObject. Karena enum tidak membutuhkan validasi
+maka code baris 9-18 bisa dihapus karena tidak dibutuhkan lagi.
+
